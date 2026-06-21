@@ -1,0 +1,23 @@
+name: Exam
+
+on:
+  push:
+    branches: [main]
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Deploy on VM
+        uses: appleboy/ssh-action@v1.2.0
+        with:
+          host: адрес сервера
+          username: имя пользователя на вм
+          passphrase: пароль от ssh ключа
+          key: |
+            тут ssh-ключ
+          script: |
+            cd ~/yc-exam
+            git pull origin main
+            docker-compose up -d --build --force-recreate
+            docker image prune -f

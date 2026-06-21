@@ -1,0 +1,13 @@
+services:
+  exam:
+    build: .
+    restart: unless-stopped
+    ports:
+      - "8080:80"
+    image: coffee-app:latest
+    healthcheck:
+      test: ["CMD-SHELL", "wget --spider -q http://localhost:80/"]
+      interval: 10s
+      timeout: 10s
+      retries: 3
+      
